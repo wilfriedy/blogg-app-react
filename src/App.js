@@ -6,6 +6,7 @@ import Create from "./pages/create/Create";
 import Details from "./pages/details/Details";
 import Search from "./pages/search/Search";
 import Navbar from "./components/Nav";
+
 function App() {
   return (
     <div className="App">
