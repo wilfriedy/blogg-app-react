@@ -1,14 +1,32 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import './create.css'
 
 export default function Create() {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
-  const [body, setBody] = useState('')
+  const [summary, setsummary] = useState('')
+  const [options, setOptions] = useState('')
+  const postingData = (newdata)=>{
+        setOptions({
+          method : 'POST',
+          headers :{
+            'Content-type' : 'application/json'
+          },
+          body : JSON.stringify(newdata)
+        })
+  }
+
+  useEffect(()=>{
+    const handlePostFetch = async (fetchOption)=>{
+        const res = fetch("http://localhost:3000/articles", {...fetchOption});
+    }
+    handlePostFetch(options)
+  }, [options])
 
   const handleSubmit = (e)=>{
     e.preventDefault()
-    console.log(author,title,body)
+    postingData({title, author, summary})
+    console.log(author,title,summary)
   }
   return (
     <div>
@@ -28,12 +46,12 @@ export default function Create() {
           />
         </label>
         <label >
-          <span>Body</span>
+          <span>summary</span>
           <textarea 
-           id="post-content" cols="30" rows="10"
-           onChange={(e)=>{setBody(e.target.value)}
+           id="post-summary" cols="30" rows="10"
+           onChange={(e)=>{setsummary(e.target.value)}
           }
-          value = {body}
+          value = {summary}
            ></textarea>
         </label>
         <button>Post article</button>
