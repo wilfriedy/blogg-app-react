@@ -1,27 +1,15 @@
 import { useEffect, useState } from "react";
 import "./create.css";
+import useFetch from '../../hooks/FetchHook'
 
 export default function Create() {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [summary, setsummary] = useState("");
-  const [options, setOptions] = useState("");
-  const postingData = (newdata) => {
-    setOptions({
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(newdata),
-    });
-  };
+  // const [options, setOptions] = useState("");
 
-  useEffect(() => {
-    const handlePostFetch = async (fetchOption) => {
-      const res = fetch("http://localhost:3000/articles", { ...fetchOption });
-    };
-    handlePostFetch(options);
-  }, [options]);
+
+  const { postingData } = useFetch("http://localhost:3000/articles", 'POST');
   // clear inputs field after submitting
   const clearAfterSubmit = () => {
     setAuthor("");
