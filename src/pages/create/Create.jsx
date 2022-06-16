@@ -1,26 +1,28 @@
 import { useEffect, useState } from "react";
 import "./create.css";
-import useFetch from '../../hooks/FetchHook'
-
+import useFetch from "../../hooks/FetchHook";
+import { useNavigate } from "react-router-dom";
 export default function Create() {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [summary, setsummary] = useState("");
-  // const [options, setOptions] = useState("");
+  const history = useNavigate();
 
-
-  const { postingData } = useFetch("http://localhost:3000/articles", 'POST');
+  const {data, postingData } = useFetch("http://localhost:3000/articles", "POST");
   // clear inputs field after submitting
   const clearAfterSubmit = () => {
     setAuthor("");
     setTitle("");
     setsummary("");
+    history("/");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    postingData({ title, author, summary });
-    clearAfterSubmit();
+    postingData({ title, author, summary })
+    if (data) {
+      clearAfterSubmit();
+    }
   };
   return (
     <div>
